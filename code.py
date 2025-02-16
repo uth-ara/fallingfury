@@ -18,9 +18,9 @@ font = pygame.font.Font("assets/font/pixel_font.ttf", 28)  # Adjust font size fo
 title_font = pygame.font.Font("assets/font/pixel_font.ttf", 70)  # Larger font for title
 
 # Load button images with transparency
-play_button = pygame.image.load("assets/images/play_button.png").convert_alpha()
-quit_button = pygame.image.load("assets/images/quit_button.png").convert_alpha()
-play_again_button = pygame.image.load("assets/images/play_again.png").convert_alpha()
+play_button = pygame.image.load("assets/images/play_button.png")
+quit_button = pygame.image.load("assets/images/quit_button.png")
+play_again_button = pygame.image.load("assets/images/play_again.png")
 
 play_button = pygame.transform.scale(play_button, (300, 80))
 quit_button = pygame.transform.scale(quit_button, (300, 80))
