@@ -15,19 +15,19 @@ BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 
 # Load fonts
-font = pygame.font.Font(r"C:\Users\user\Desktop\compare\pixel_font.TTF", 28)  # Adjust font size for better fit
-title_font = pygame.font.Font(r"C:\Users\user\Desktop\compare\pixel_font.TTF", 70)  # Larger font for title
+font = pygame.font.Font("assets/font/pixel_font.TTF", 28)  # Adjust font size for better fit
+title_font = pygame.font.Font("assets/font/pixel_font.TTF", 70)  # Larger font for title
 
 
 # Load images
-play_button = pygame.image.load(r"C:\Users\user\fallingfury\assets\images\play_button.png").convert_alpha()
-quit_button = pygame.image.load(r"C:\Users\user\fallingfury\assets\images\quit_button.png").convert_alpha()
-play_again_button = pygame.image.load(r"C:\Users\user\fallingfury\assets\images\play_again.png").convert_alpha()
-player_image = pygame.image.load(r"C:\Users\user\fallingfury\assets\images\ship.png").convert_alpha()
-monster_image = pygame.image.load(r"C:\Users\user\fallingfury\assets\images\monster.png").convert_alpha()
-meteor_image = pygame.image.load(r"C:\Users\user\fallingfury\assets\images\meteor.png").convert_alpha()
-heart_image = pygame.image.load(r"C:\Users\user\fallingfury\assets\images\heart.png").convert_alpha()
-monster_ball_image = pygame.image.load(r"C:\Users\user\fallingfury\assets\images\bomb.png").convert_alpha()
+play_button = pygame.image.load("assets/images/play_button.png")
+quit_button = pygame.image.load("assets/images/quit_button.png")
+play_again_button = pygame.image.load("assets/images/play_again.png")
+player_image = pygame.image.load("assets/images/ship.png")
+monster_image = pygame.image.load("assets/images/monster.png")
+meteor_image = pygame.image.load("assets/images/meteor.png")
+heart_image = pygame.image.load("assets/images/heart.png")
+monster_ball_image = pygame.image.load("assets/images/bomb.png")
 # Resize images
 play_button = pygame.transform.scale(play_button, (300, 80))
 quit_button = pygame.transform.scale(quit_button, (300, 80))
@@ -155,7 +155,7 @@ def game_loop():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-        
+            
         # Player movement
         #bomb movement
         screen.blit(player_image, (player_x, player_y))
