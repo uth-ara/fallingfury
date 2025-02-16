@@ -72,6 +72,7 @@ monster_x, monster_y = 120,90  # Monster in top-left
 bombs = []
 lives = 5
 score = 0
+player_size = 50
 
 def draw_lives():
     for i in range(lives):
@@ -93,6 +94,25 @@ def draw_monster_balls():
 def draw_bombs():
     for bomb in bombs:
         screen.blit(meteor_image, (bomb[0], bomb[1]))
+def handle_player_movement(keys):
+    global player_x
+    # Move left if LEFT key is pressed and player is within screen bounds
+    if keys[pygame.K_LEFT] and player_x > 0:
+        player_x -= player_speed
+    # Move right if RIGHT key is pressed and player is within screen bounds
+    if keys[pygame.K_RIGHT] and player_x < WIDTH - player_size:
+        player_x += player_speed
+
+# Function to handle game controls (quit, pause, etc.)
+# Function to handle game controls (quit, pause, etc.)
+def handle_game_controls():
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:  # Quit if close button is clicked
+            return False
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:  # Go to main menu instead of quitting
+            main_menu()
+    return True
+
 
 def main_menu():
     while True:
@@ -149,25 +169,29 @@ def game_loop():
     running = True
     
     while running:
+        running = handle_game_controls()  # Check for quit/pause events first
+        if not running:
+            break  # Exit loop immediately if quit is detected
+
         screen.fill(BLACK)
         update_stars(stars)
         draw_stars(stars)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-            
-        # Player movement
-        #bomb movement
+
+        # Draw game elements
         screen.blit(player_image, (player_x, player_y))
         draw_monster()
         draw_bombs()
         draw_lives()
         draw_score()
-        
+
+        keys = pygame.key.get_pressed()  
+        handle_player_movement(keys)  
+
         pygame.display.update()
         clock.tick(30)
     
     pygame.quit()
+
 
 # Run game
 while True:
