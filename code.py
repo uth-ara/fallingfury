@@ -57,7 +57,7 @@ monster_ball_image = pygame.transform.scale(monster_ball_image, ball_size)
 # Load and scale monster's missile
 monster_balls = []
 ball_release_time = 0
-ball_speed = 5 #10
+ball_speed = 7
 monster_fire_start_time = 0  # Track when the monster should start firing
 monster_fire_delay = 10000  # 10 seconds delay before the monster starts firing
 ball_directions = [(-1, 1), (0, 1), (1, 1)]# Left-down, straight-down, right-down
@@ -134,7 +134,7 @@ def handle_player_movement(keys):
         player_x += player_speed
 
 # Function to handle game controls (quit, pause, etc.)
-# Function to handle game controls (quit, pause, etc.)
+
 def handle_game_controls():
     for event in pygame.event.get():
         if event.type == pygame.QUIT:  # Quit if close button is clicked
@@ -165,7 +165,7 @@ def main_menu():
                     return
                 if quit_button_rect.collidepoint(event.pos):
                     button_click_sound.play()
-                    pygame.time.wait(1000) #delay
+                    pygame.time.wait(500) #delay
                     pygame.quit()
                     exit()
 
@@ -191,10 +191,11 @@ def game_over_screen():
                 if play_again_button_rect.collidepoint(event.pos):
                     button_click_sound.play()
                     pygame.time.wait(200) #delay
+                    bomb_spawn_rate = 1
                     return "restart"
                 if quit_button_rect.collidepoint(event.pos):
                     button_click_sound.play()
-                    pygame.time.wait(1000) #delay
+                    pygame.time.wait(500) #delay
                     pygame.quit()
                     exit()
 
@@ -226,7 +227,7 @@ def game_loop():
             screen.fill(BLACK)
             update_stars(stars)
             draw_stars(stars)
-            draw_text("Paused", WIDTH // 2, HEIGHT // 2, font, WHITE)
+            draw_text("Paused", WIDTH // 2, HEIGHT // 2, title_font, WHITE)
             draw_text("Press Space to Resume", WIDTH // 2, HEIGHT // 3, font, WHITE)
             draw_text("Press Escape for MAIN MENU", WIDTH // 2, HEIGHT // 4, font, WHITE)
             pygame.display.update()
@@ -357,9 +358,9 @@ def game_loop():
                 
         pygame.display.update()
         clock.tick(30)
-#       pygame.quit()
 
-# Run game
+
+
 
 # Main game loop
 while True:
