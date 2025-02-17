@@ -93,7 +93,7 @@ monster_x, monster_y = 120,90  # Monster in top-left
 bombs = []
 lives = 5
 score = 0
-player_size = 50
+player_size = 80
 game_state = "menu"
 bomb_speed = 5
 bomb_spawn_rate = 1
@@ -106,7 +106,7 @@ def draw_lives():
 
 def draw_score():
     score_text = font.render(f"Score: {score}", True, WHITE)
-    screen.blit(score_text, (WIDTH - 300, 20))
+    screen.blit(score_text, (WIDTH - 275, 20))
 
 def draw_monster():
     screen.blit(monster_image, (monster_x, monster_y))
@@ -302,7 +302,7 @@ def game_loop():
             ball[1] += ball[3]  # Move in Y direction
 
             # Check for collision with the player (UFO)
-            ball_rect = pygame.Rect(ball[0], ball[1], ball_size[0], ball_size[1])  # Ball rect
+            ball_rect = pygame.Rect(ball[0], ball[1], ball_size[0]-20, ball_size[1]-20)  # Ball rect
             player_rect = pygame.Rect(player_x, player_y, player_size, player_size)  # Player rect
 
             if player_rect.colliderect(ball_rect):  # If the ball collides with the player
@@ -312,29 +312,32 @@ def game_loop():
             # Remove ball if off-screen
             elif ball[1] > HEIGHT:
                 monster_balls.remove(ball)
-            # Move monster balls and check for collision
+            # TO REMOVE BALLS FROM SCREEN AND LIVES LOGIC
             to_remove_balls = []
+            player_rect = pygame.Rect(player_x, player_y, player_size, player_size)
             for ball in monster_balls:
                 ball[0] += ball[2]  
                 ball[1] += ball[3]  
-                ball_rect = pygame.Rect(ball[0], ball[1], ball_size[0], ball_size[1])
+                ball_rect = pygame.Rect(ball[0], ball[1], ball_size[0], ball_size[1])  # Corrected ball rect size
 
-                if ball_rect.colliderect(player_rect):
+                if ball_rect.colliderect(player_rect):  # If ball collides with player
                     pygame.mixer.Sound.play(hit_sound)  # Play hit sound
-                    lives -= 2  # Correctly decrement lives before removing the ball
+                    lives -= 2  # Ensure lives decrement exactly when a collision happens
                     to_remove_balls.append(ball)
+                    
 
                     if lives <= 0:
                         game_over_screen()
                         running = False
                         break  # Exit loop immediately after game over
 
-                if ball[1] > HEIGHT:  
+                elif ball[1] > HEIGHT:  # Remove ball if off-screen
                     to_remove_balls.append(ball)
 
-            # Remove balls after iteration
+
+            # Remove balls after iteration to prevent modification issues
             for ball in to_remove_balls:
-                if ball in monster_balls:  # Ensure the ball still exists in the list before removing
+                if ball in monster_balls:  # Ensure ball is still in the list before removing
                     monster_balls.remove(ball)
 
         # Draw game elements
