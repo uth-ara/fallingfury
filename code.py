@@ -4,15 +4,15 @@ import random
 # Initialize Pygame
 pygame.init()
 
-game_over_sound = pygame.mixer.Sound("C:/Users/Admin/fallingfury/assets/audio/completion or end of game (1) (online-audio-converter.com).mp3")  # game over sound 
+game_over_sound = pygame.mixer.Sound("assets/audio/completion or end of game (1) (online-audio-converter.com).mp3")  # game over sound 
 game_over_sound.set_volume(1.0)  # Adjust volume
 
 #click sound
-button_click_sound = pygame.mixer.Sound("C:/Users/Admin/fallingfury/assets/audio/click.mp3")
+button_click_sound = pygame.mixer.Sound("assets/audio/click.mp3")
 button_click_sound.set_volume(1.0)  # Adjust volume
 
 #hit sound
-hit_sound = pygame.mixer.Sound("C:/Users/Admin/fallingfury/assets/audio/hittt (online-audio-converter.com).mp3")
+hit_sound = pygame.mixer.Sound("assets/audio/hittt (online-audio-converter.com).mp3")
 hit_sound.set_volume(1.0)
 
 # Screen settings
@@ -117,8 +117,8 @@ def draw_monster_balls():
         screen.blit(monster_ball_image, (ball[0], ball[1]))  # Draw ball
         
 # Load and play background music
-pygame.mixer.music.load("C:/Users/Admin/fallingfury/assets/audio/newbgsound.mp3")  # Replace with your actual file path
-pygame.mixer.music.set_volume(0.2)  # Adjust volume (0.0 to 1.0)
+pygame.mixer.music.load("assets/audio/bgm.mp3")  # Replace with your actual file path
+pygame.mixer.music.set_volume(0.05)  # Adjust volume (0.0 to 1.0)
 pygame.mixer.music.play(-1)  # -1 makes it loop indefinitely
 
 def draw_bombs():
@@ -165,7 +165,7 @@ def main_menu():
                     return
                 if quit_button_rect.collidepoint(event.pos):
                     button_click_sound.play()
-                    pygame.time.wait(200) #delay
+                    pygame.time.wait(1000) #delay
                     pygame.quit()
                     exit()
 
@@ -184,6 +184,7 @@ def game_over_screen():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                button_click_sound.play()
                 pygame.quit()
                 exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -193,7 +194,7 @@ def game_over_screen():
                     return "restart"
                 if quit_button_rect.collidepoint(event.pos):
                     button_click_sound.play()
-                    pygame.time.wait(200) #delay
+                    pygame.time.wait(1000) #delay
                     pygame.quit()
                     exit()
 
@@ -335,30 +336,6 @@ def game_loop():
             for ball in to_remove_balls:
                 if ball in monster_balls:  # Ensure the ball still exists in the list before removing
                     monster_balls.remove(ball)
-
-        
-
-##        # Move monster balls and check for collision
-##        to_remove_balls = []
-##        for ball in monster_balls:
-##            ball[0] += ball[2]  
-##            ball[1] += ball[3]  
-##            ball_rect = pygame.Rect(ball[0], ball[1], ball_size[0], ball_size[1])
-##
-##            if ball_rect.colliderect(player_rect):
-##                lives -= 2  
-##                to_remove_balls.append(ball)
-##
-##                if lives <= 0:
-##                    game_over_screen()
-##                    running = False
-##
-##            if ball[1] > HEIGHT:  
-##                to_remove_balls.append(ball)
-##
-##        for ball in to_remove_balls:
-##            monster_balls.remove(ball)
-
 
         # Draw game elements
         screen.blit(player_image, (player_x, player_y))
